@@ -48,10 +48,19 @@ The code does clear the inputFile and outputFile
 $inputFile="c:\url.txt"
 $outputFile="c:\output.txt"
 
+#Sample items, might have more idk
+$toMatch=@("&#39;","&#34;","&#60;","&#62;","&quot;","&amp;","&lt;","&gt;")
+$toReplaceWith=@("'",'"',"<",">",'"',"&","<",">")
+
 clear-content -path $outputFile
 get-content $inputFile | ForEach-Object{
     $uri=$_;
     $title=$($(invoke-restmethod -uri $uri).toString() -split '\n' | Select-String -Pattern "(?<=<title>)(.*)(?= - Youtube<\/title>)").matches.value
+    
+    For ($i=0; $i -lt $toMatch.Length; $i++){ #Not the most efficient method.
+        $title=$title.Replace($toMatch[$i],$toReplaceWith[$i])   
+    }
+    
     echo "$uri | $title " | Out-File $outputFile -append
 }
 clear-content -path $inputFile
