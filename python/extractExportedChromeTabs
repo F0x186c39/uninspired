@@ -2,6 +2,8 @@
 #With reference to : 
 #https://android.stackexchange.com/questions/56635/how-can-i-export-the-list-of-open-chrome-tabs
 
+#Oops, flawed, due to truncation....
+
 import sys
 longline="0"
 with open("new.txt",'r', encoding="utf-8") as f:
