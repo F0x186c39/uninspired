@@ -1,0 +1,31 @@
+#2018 OCT 06
+#With reference to : 
+#https://android.stackexchange.com/questions/56635/how-can-i-export-the-list-of-open-chrome-tabs
+
+import sys
+longline="0"
+with open("new.txt",'r', encoding="utf-8") as f:
+    longline=f.read()
+f.close()
+thisone=longline.split("\n")
+longlist=[]
+currentcount=len(longlist)
+
+for eanum in range(len(thisone)):
+    if thisone[eanum] != '' and thisone[eanum] != 'Inspect':
+        if thisone[eanum][:4] != "http":
+            longlist.append(thisone[eanum]+" | ")
+        elif thisone[eanum][:4] == "http":
+            if currentcount == len(longlist):
+                longlist.append("No Title | ")
+            
+            longlist[currentcount]+=thisone[eanum]
+            #print(longlist[currentcount])
+            currentcount+=1
+print(len(longlist))
+longlist.sort()
+with open("extract.txt",'w', encoding="utf-8") as f:
+    for ealine in longlist:
+        deline=ealine+"\n"
+        f.write(deline)
+f.close()
